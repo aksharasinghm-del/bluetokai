@@ -230,6 +230,16 @@ td:first-child{font-weight:700}
 }
 @media (max-width:560px){ .em-nav{display:none} .em-b{padding:22px 18px 8px} .eh{font-size:1.7rem} }
 @media (prefers-reduced-motion:reduce){ .frame{transition:none} .changed{animation:none} }
+/* ---------- campaign kit ---------- */
+.ck-strip{display:flex; gap:14px; overflow-x:auto; scroll-snap-type:x mandatory; padding:4px 2px 12px; margin:14px 0 6px}
+.ck-strip figure{margin:0; flex:0 0 min(300px,72%); scroll-snap-align:start}
+.ck-strip img{display:block; width:100%; height:auto; border-radius:14px; border:1px solid var(--line); box-shadow:0 14px 30px -18px rgba(16,33,63,.5)}
+.ck-strip figcaption{font-size:.78rem; color:var(--muted); margin-top:8px}
+.ck-btns{display:flex; flex-wrap:wrap; gap:10px}
+.ck-b{display:inline-block; border:1px solid var(--line); border-radius:999px; padding:.55em 1.1em; font-weight:700; text-decoration:none; color:var(--ink); background:var(--panel)}
+.ck-b.ck-p{background:var(--peacock); border-color:var(--peacock); color:#fff}
+:root[data-theme="dark"] .ck-b.ck-p{color:#0D1424}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .ck-b.ck-p{color:#0D1424} }
 </style>
 </head>
 <body>
@@ -238,7 +248,7 @@ td:first-child{font-weight:700}
     <div class="logo"><i aria-hidden="true">✉</i><div><b>akshara mail</b><small>email marketing portfolio</small></div></div>
     <button class="compose" type="button" id="compose">✏️ Hire me</button>
     <ul class="folders" id="folders">
-      <li><button type="button" data-f="all" aria-pressed="true">Inbox <span class="ct" id="unread">12</span></button></li>
+      <li><button type="button" data-f="all" aria-pressed="true">Inbox <span class="ct" id="unread">13</span></button></li>
       <li><button type="button" data-f="memo" aria-pressed="false">Strategy memos</button></li>
       <li><button type="button" data-f="flow" aria-pressed="false">Automated flows</button></li>
       <li><button type="button" data-f="camp" aria-pressed="false">Campaigns</button></li>
@@ -286,6 +296,7 @@ td:first-child{font-weight:700}
   /* ---------- messages ---------- */
   var M=[
     {id:'start', f:'memo', from:'Akshara Singh', av:'AS', avc:'#7A3E8E', time:'9:00', subj:'Start here: my email plan for Blue Tokai ☕', pre:'Goals, flows, newsletter and how to explore this inbox.', lbl:['memo','Strategy'], render:memoStart},
+    {id:'kit', f:'memo', from:'Akshara Singh', av:'AS', avc:'#7A3E8E', time:'9:30', subj:'The campaign kit, as a 6-slide carousel \ud83c\udfa8', pre:'The whole program in six designed slides. Open it in Canva.', lbl:['memo','Campaign kit'], render:memoKit},
     {id:'w1', f:'flow', from:'Blue Tokai', av:'BT', avc:'#1B4DB1', time:'9:02', subj:'Welcome to the roast ☕ (10% off inside)', pre:'Fresh Indian coffee, roasted after you order.', lbl:['flow','Welcome 1 of 3'], email:true, render:w1,
       annos:[['Subject line','Tells you what\u2019s inside before you open it: a welcome, plus the gift.'],['Preheader','Continues the subject line instead of repeating it, and lands the freshness promise.'],['One job','The email has one goal: the first order. Everything points to one button.'],['Gift, not a bribe','The discount is framed as a welcome gift for joining, and it expires to create gentle urgency.'],['Why believe','Three short reasons, no paragraphs. Easy to scan on a phone.'],['The P.S.','Invites replies. Replies signal to inbox providers that people want these emails.']]},
     {id:'w2', f:'flow', from:'Blue Tokai', av:'BT', avc:'#1B4DB1', time:'Day 2', subj:'Quick question: how do you brew? 🫖', pre:'One tap and every email after this is about your brewer.', lbl:['flow','Welcome 2 of 3'], email:true, render:w2,
@@ -416,6 +427,10 @@ td:first-child{font-weight:700}
       '<p style="font-size:.8rem"><span class="e-news" style="padding:1px 6px; border-radius:4px; font-weight:700">Newsletter</span> <span class="e-camp" style="padding:1px 6px; border-radius:4px; font-weight:700">Campaign</span> <span class="e-auto" style="padding:1px 6px; border-radius:4px; font-weight:700">Segment-only send</span></p>'+
       '<h3>Growing the list</h3><div class="tw"><table><thead><tr><th>Where</th><th>How</th></tr></thead><tbody><tr><td>Website</td><td>A "Find your coffee" quiz instead of a plain pop-up; the answers become tags.</td></tr><tr><td>Cafés</td><td>A table card QR code: "Get a free brewing guide for the coffee you\u2019re drinking."</td></tr><tr><td>Checkout</td><td>Opt-in for brewing tips, not "marketing emails".</td></tr><tr><td>Workshops</td><td>Every sign-up joins the list, tagged by city.</td></tr></tbody></table></div>'+sig()+'</div>'; }
 
+  function memoKit(){ var sl=['An inbox for one kitchen at a time','Subject lines: be specific','Replenishment flow, day 21','5 flows, 1 newsletter, 1 rule','Targets against 2026 benchmarks','Why a peacock?'];
+    return '<div class="memo ck"><h3>The campaign kit</h3><p>The whole program as a six-slide carousel I designed for this pitch: the inbox, the subject-line rules, the replenishment flow, the program map and the targets. Scroll through it here, or open the original in Canva.</p>'+
+    '<div class="ck-strip" tabindex="0" aria-label="Campaign kit slides, scroll sideways">'+sl.map(function(t,i){ return '<figure><img src="canva-kit/0'+(i+1)+'.jpg" alt="Slide '+(i+1)+': '+t+'" loading="lazy" width="1080" height="1350"><figcaption>'+(i+1)+' / 6 · '+t+'</figcaption></figure>'; }).join('')+'</div>'+
+    '<p class="ck-btns"><a class="ck-b ck-p" href="https://www.canva.com/d/isPpve5_gHYLyO7" target="_blank" rel="noopener">View in Canva \u2197</a><a class="ck-b" href="canva-kit/campaign-kit.pdf" download>Download PDF</a><a class="ck-b" href="https://www.canva.com/d/84mWTID-NMi4Fmd" target="_blank" rel="noopener">See all my work \u2197</a></p></div>'; }
   function memoKpi(){ return '<div class="memo">'+
     '<h3>Targets for the first 6 months</h3><div class="tw"><table><thead><tr><th>Metric</th><th>My target</th><th>2026 benchmark</th></tr></thead><tbody>'+
     '<tr><td>Campaign open rate</td><td>35%</td><td>31% average; top 10% reach 45.1%<span class="src"> (Klaviyo)</span></td></tr>'+
